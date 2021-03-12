@@ -1,11 +1,10 @@
-import { useState } from "react";
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-
+import { useState } from "react"
 import Character from "../components/Character";
+import { GET_CHARACTERS_QUERY } from "../queries/getCharacters.js"
+import { client } from "../utils/client.js"
 
 export default function Home(results) {
-  const intialState = results;
-  const [characters, setCharacters] = useState(intialState.characters);
+  const [characters] = useState(results.characters);
 
   return (
     <>
@@ -16,23 +15,8 @@ export default function Home(results) {
 }
 
 export async function getStaticProps() {
-  const client = new ApolloClient({
-    uri: "https://rickandmortyapi.com/graphql/",
-    cache: new InMemoryCache(),
-  });
-  
   const { data } = await client.query({
-    query: gql`
-      query {
-        characters {
-          results {
-            name
-            id
-            image
-          }
-        }
-      }
-    `,
+    query: GET_CHARACTERS_QUERY,
   });
 
   return {

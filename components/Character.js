@@ -1,6 +1,4 @@
-import React from "react";
-
-const Character = ({ characters }) => {
+export const Character = ({ characters }) => {
   return (
     <>
       {characters.map((character) => {
